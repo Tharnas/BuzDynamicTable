@@ -5,11 +5,6 @@ td {
     border-collapse: collapse;
 }
 
-
 td {
     min-width: 100px;
 }
-
-/* th {
-    display: none;
-} */

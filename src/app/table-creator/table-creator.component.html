@@ -18,9 +18,13 @@
         <col width="100" *ngFor="let header of columnCountArray">
     </colgroup>
     <tr *ngFor="let row of datas">
-        <td *ngFor="let cell of row" [attr.colspan]="cell.colspan" [attr.rowspan]="cell.rowspan">{{cell.value}}
+        <td *ngFor="let cell of row | onlyDisplayableCells" [attr.colspan]="cell.colspan" [attr.rowspan]="cell.rowspan">
+            {{cell.value}}
             <button (click)="right(cell, row)">right</button>
             <button (click)="down(cell, row)">down</button>
         </td>
     </tr>
 </table>
+<p>ColumnCountArray: {{columnCountArray|json}}</p>
+<p>ColumnCount: {{maxColumnCount}}</p>
+<p>datas: {{datas| json}}</p>

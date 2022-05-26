@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableCreatorComponent } from './table-creator/table-creator.component';
 import { TableViewerComponent } from './table-viewer/table-viewer.component';
+import { OnlyDisplayableCellsPipe } from './only-displayable-cells.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableCreatorComponent,
-    TableViewerComponent
+    TableViewerComponent,
+    OnlyDisplayableCellsPipe
   ],
   imports: [
     BrowserModule,

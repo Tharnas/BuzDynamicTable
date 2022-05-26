@@ -7,91 +7,44 @@ import { TableCell } from '../models/table-cell.model';
   styleUrls: ['./table-creator.component.css']
 })
 export class TableCreatorComponent implements OnInit {
-  //   displayedColumns: string[] = ['name', 'weight', 'symbol', 'position'];
-  //   dataSource: {name:string, weight: number, symbol:string, position:string}[] = [
-  // { 
-  //   name: "name1",
-  //   weight: 11,
-  //   symbol: "symbol1",
-  //   position: "position1"
-  // },
-  // { 
-  //   name: "name2",
-  //   weight: 12,
-  //   symbol: "symbol2",
-  //   position: "position2"
-  // },
-  // { 
-  //   name: "name3",
-  //   weight: 13,
-  //   symbol: "symbol3",
-  //   position: "position3"
-  // },
-  // { 
-  //   name: "name4",
-  //   weight: 14,
-  //   symbol: "symbol4",
-  //   position: "position4"
-  // },
-  //   ];
-
 
   datas: TableCell[][] = [
     [
       {
         colspan: 1,
         rowspan: 1,
-        value: "a one"
-      },
-      {
-        colspan: 2,
-        rowspan: 1,
-        value: "spaaaaan"
+        value: "a one",
+        display: true,
       },
       {
         colspan: 1,
         rowspan: 1,
-        value: "a four"
-      },
-      {
-        colspan: 1,
-        rowspan: 2,
-        value: "a five"
+        value: "a two",
+        display: true,
       },
     ],
     [
       {
         colspan: 1,
         rowspan: 1,
-        value: "a one"
+        value: "a one",
+        display: true,
       },
       {
         colspan: 1,
         rowspan: 1,
-        value: "a two"
+        value: "a two",
+        display: true,
       },
-      {
-        colspan: 2,
-        rowspan: 1,
-        value: "spaaaaan"
-      },
-    ],
+    ]
   ];
-
+ 
   public get maxColumnCount(): number {
     let maxRowCount = 0;
 
-    this.datas.forEach(row => {
-      let countOfColumnsInCurrentRow = 0;
-
-      row.forEach(cell => {
-        countOfColumnsInCurrentRow += cell.colspan;
-      });
-
-      if (countOfColumnsInCurrentRow > maxRowCount) {
-        maxRowCount = countOfColumnsInCurrentRow;
-      }
-    });
+    if (this.datas.length > 0) {
+      maxRowCount = this.datas[0].length;
+    }
 
     return maxRowCount;
   }
@@ -120,16 +73,17 @@ export class TableCreatorComponent implements OnInit {
       row.push({
         colspan: 1,
         rowspan: 1,
-        value: "new"
+        value: "new",
+        display: true
       });
     });
   }
 
 
   public addRow(): void {
-    let newRow = [];
+    let newRow: TableCell[] = [];
     for (let index = 0; index < this.maxColumnCount; index++) {
-      newRow.push({ colspan: 1, rowspan: 1, value: index.toString() });
+      newRow.push({ colspan: 1, rowspan: 1, value: index.toString(), display: true });
     }
     this.datas.push(newRow);
   }
@@ -143,16 +97,26 @@ export class TableCreatorComponent implements OnInit {
       return;
     }
 
-    if (row.length <= cellIndex + 1) {
+    if (row.length <= cellIndex + cell.colspan) {
       console.log('can\'t expand!');
       return;
     }
 
-    const nextCell = row[cellIndex + 1];
+    const nextCell = row[cellIndex + cell.colspan];
+
+    if (nextCell.display === false) {
+      console.log('can\'t expand! -> not displayed');
+      return;
+    }
+
+    if (cell.rowspan !== nextCell.rowspan) {
+      console.log('can\'t expand! -> rowspan');
+      return;
+    }
 
     cell.value += nextCell.value;
     cell.colspan += nextCell.colspan;
-    row.splice(cellIndex + 1, 1);
+    nextCell.display = false;
   }
 
   public down(cell: TableCell, row: TableCell[]) {
@@ -164,11 +128,25 @@ export class TableCreatorComponent implements OnInit {
       return;
     }
 
-    if (this.datas.length <= rowIndex + 1) {
+    if (this.datas.length <= rowIndex + cell.rowspan) {
       console.log('can\'t expand');
       return;
     }
 
-    cell.rowspan = cell.rowspan + 1;
+    const nextCell = this.datas[rowIndex + cell.rowspan][cellIndex];
+
+    if (nextCell.display === false) {
+      console.log('can\'t expand! -> not displayed');
+      return;
+    }
+
+    if (cell.colspan !== nextCell.colspan) {
+      console.log('can\'t expand! -> rowspan');
+      return;
+    }
+
+    cell.value += nextCell.value;
+    cell.rowspan += nextCell.rowspan;
+    nextCell.display = false;
   }
 }
