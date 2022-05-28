@@ -1,5 +1,7 @@
-<button mat-raised-button color="primary" (click)="addRow()">Add row</button>
-<button mat-raised-button color="primary" (click)="addColumn()">Add column</button>
+<div *ngIf="isEditMode">
+    <button mat-raised-button color="primary" (click)="addRow()">Add row</button>
+    <button mat-raised-button color="primary" (click)="addColumn()">Add column</button>
+</div>
 
 <table class="dynamic-table">
     <colgroup>
@@ -8,12 +10,12 @@
     <tr *ngFor="let row of data">
         <td *ngFor="let cell of row | onlyDisplayableCells" [attr.colspan]="cell.colspan" [attr.rowspan]="cell.rowspan">
             <div class="container">
-                <!-- {{cell.value}} -->
-                <mat-form-field class="content">
+                <mat-form-field class="content content-edit" *ngIf="isEditMode">
                     <mat-label>Value</mat-label>
                     <input matInput type="text" [(ngModel)]="cell.value">
                 </mat-form-field>
-                <button mat-icon-button [matMenuTriggerFor]="menu">
+                <p *ngIf="!isEditMode"  class="content content-display">{{cell.value}}</p>
+                <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isEditMode">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">

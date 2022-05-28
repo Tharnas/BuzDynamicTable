@@ -9,6 +9,8 @@ import { TableCell } from '../models/table-cell.model';
 export class DynamicTableComponent {
   @Input()
   public data: TableCell[][] = [];
+  @Input()
+  public isEditMode: boolean = false;
 
   public get maxColumnCount(): number {
     let maxRowCount = 0;

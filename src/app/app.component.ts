@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TableCell } from './models/table-cell.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,34 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'BuzDynamicTable';
+  public data: TableCell[][] = [
+    [
+      {
+        colspan: 1,
+        rowspan: 1,
+        value: "a one",
+        display: true,
+      },
+      {
+        colspan: 1,
+        rowspan: 1,
+        value: "a two",
+        display: true,
+      },
+    ],
+    [
+      {
+        colspan: 1,
+        rowspan: 1,
+        value: "a one",
+        display: true,
+      },
+      {
+        colspan: 1,
+        rowspan: 1,
+        value: "a two",
+        display: true,
+      },
+    ],
+  ];
 }

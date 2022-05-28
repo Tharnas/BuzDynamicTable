@@ -1,6 +1,7 @@
-<ul>
-  <li><a routerLink="table-creator">Creator</a></li>
-  <li><a routerLink="table-viewer">Viewer</a></li>
-</ul>
+<h1>Edit</h1>
+<app-dynamic-table [data]="data" [isEditMode]="true"></app-dynamic-table>
 
-<router-outlet></router-outlet>
+<p>data: {{data| json}}</p>
+
+<h1>Display</h1>
+<app-dynamic-table [data]="data"></app-dynamic-table>
