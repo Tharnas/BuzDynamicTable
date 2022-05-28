@@ -1,0 +1,40 @@
+<button mat-raised-button color="primary" (click)="addRow()">Add row</button>
+<button mat-raised-button color="primary" (click)="addColumn()">Add column</button>
+
+<table class="dynamic-table">
+    <colgroup>
+        <col width="100" *ngFor="let header of columnCountArray">
+    </colgroup>
+    <tr *ngFor="let row of data">
+        <td *ngFor="let cell of row | onlyDisplayableCells" [attr.colspan]="cell.colspan" [attr.rowspan]="cell.rowspan">
+            <div class="container">
+                <!-- {{cell.value}} -->
+                <mat-form-field class="content">
+                    <mat-label>Value</mat-label>
+                    <input matInput type="text" [(ngModel)]="cell.value">
+                </mat-form-field>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="MergeWithRight(cell,row)">
+                        <mat-icon>logout</mat-icon>
+                        <span>Merge with right</span>
+                    </button>
+                    <button mat-menu-item (click)="MergeWithBelow(cell, row)">
+                        <mat-icon style="transform: rotate(90deg)">logout</mat-icon>
+                        <span>Merge with below</span>
+                    </button>
+                    <button mat-menu-item (click)="UnmergeWithRight(cell, row)">
+                        <mat-icon style="transform: rotate(180deg)">logout</mat-icon>
+                        <span>Unmerge with right</span>
+                    </button>
+                    <button mat-menu-item (click)="UnmergeWithBelow(cell, row)">
+                        <mat-icon style="transform: rotate(-90deg)">logout</mat-icon>
+                        <span>Unmerge with below</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </td>
+    </tr>
+</table>

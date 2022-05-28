@@ -1,0 +1,27 @@
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td {
+    min-width: 100px;
+}
+
+.dynamic-table>tr>td {
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.dynamic-table>tr>td>.container {
+    display: flex;
+}
+
+.dynamic-table>tr>td>.container>.content {
+    flex-grow: 1;
+}
+
+.dynamic-table>tr>td>.container>button {
+    align-self: center;
+}
